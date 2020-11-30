@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Photos</string>
+    <string-array name="album_array">
+        <item>Photo Album</item>
+        <item>New Album</item>
+    </string-array>
+</resources>
