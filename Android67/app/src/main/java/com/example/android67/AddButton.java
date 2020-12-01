@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AddButton extends AppCompatActivity {
 
     private Button add;
@@ -33,22 +35,42 @@ public class AddButton extends AppCompatActivity {
 
         add = findViewById(R.id.addButton);
         newalbum = findViewById(R.id.album_editText);
+
+        ArrayList<String> mainactalblist = getIntent().getExtras().getStringArrayList("albumlist");
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                boolean dupe = false;
                 String newalbname = newalbum.getText().toString().trim();
-                Log.d("debugtag", newalbname);
-                if(newalbname.length()==0){
+                if (newalbname.length() == 0) {
                     Toast.makeText(AddButton.this, "Empty", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent intent = new Intent();
-                    intent.putExtra("album", newalbname);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
+                } else {
+                    try {
+                        for (String albname : mainactalblist) {
+                            Log.d("debugtag", albname);
+                            if (newalbname.equals(albname)) {
+                                dupe = true;
+                                Toast.makeText(AddButton.this, "Duplicate album!", Toast.LENGTH_LONG).show();
 
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Log.d("debugtag", newalbname);
+
+                    if(!dupe){
+                        Intent intent = new Intent();
+                        intent.putExtra("album", newalbname);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                    else{
+                        finish();
+                    }
+
+                }
             }
         });
         };

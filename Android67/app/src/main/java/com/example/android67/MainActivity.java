@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<String> alblist = new ArrayList<String>();
+        ArrayList<String> alblist = new ArrayList<>();
         albumnames = getResources().getStringArray(R.array.album_array);
         adapter = new ArrayAdapter<>(this, R.layout.album, alblist);
 
@@ -39,12 +39,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddButton.class);
+                intent.putStringArrayListExtra("albumlist", alblist);
                 int requestCode = 1;
                 startActivityForResult(intent, requestCode);
-
             }
         });
-
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
