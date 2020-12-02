@@ -10,23 +10,47 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+class Album implements Serializable {
+
+    String name;
+    ArrayList<Photo> photolist;
+    Album(String name, ArrayList<Photo> photolist){
+        this.name = name;
+        this.photolist = photolist;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+
+}
+
+class Photo{
+    String path;
+    Photo(String path){
+        this.path = path;
+    }
+}
 public class MainActivity extends AppCompatActivity {
 
     private ListView albumlistview;
     private String[] albumnames;
     private Button addAlbum, deleteAlbum, renameAlbum;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> alblist;
+    private ArrayAdapter<Album> adapter;
+    private ArrayList<Album> alblist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<String> alblist = new ArrayList<>();
+        ArrayList<Album> alblist = new ArrayList<>();
         albumnames = getResources().getStringArray(R.array.album_array);
-        adapter = new ArrayAdapter<>(this, R.layout.album, alblist);
+        adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
 
         albumlistview = findViewById(R.id.albumList);
         albumlistview.setAdapter(adapter);
@@ -37,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddAlbButton.class);
-                intent.putStringArrayListExtra("albumlist", alblist);
+                intent.putExtra("albumlist", alblist);
                 int requestCode = 1;
                 startActivityForResult(intent, requestCode);
             }
@@ -47,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, EditAlbButton.class);
-                intent.putStringArrayListExtra("albumlist", alblist);
+                intent.putExtra("albumlist", alblist);
                 int requestcode = 2;
                 startActivityForResult(intent, requestcode);
             }
@@ -63,15 +87,21 @@ public class MainActivity extends AppCompatActivity {
             if (data != null) {
                 String buttype = data.getStringExtra("buttype");
                 if(buttype.equals("add")) {
-                    String newalbum = data.getStringExtra("album");
-                    Log.d("debugtag", newalbum);
+                    Album newalbum = (Album)data.getSerializableExtra("album");
+                    Log.d("debugtag", newalbum.getName());
                     adapter.add(newalbum);
                     adapter.notifyDataSetChanged();
                 }
                 if(buttype.equals("delete")){
                     String alb_todelete = data.getStringExtra("album");
-                    adapter.remove(alb_todelete);
-                    adapter.notifyDataSetChanged();
+                    for (Album alb : alblist){
+                        if(alb.getName().equals(alb_todelete)){
+                            adapter.remove(alb);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+
                 }
             }
         }

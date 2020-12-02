@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class AddAlbButton extends AppCompatActivity {
         newalbum = findViewById(R.id.album_editText);
         delete = findViewById(R.id.delButton);
 
-        ArrayList<String> mainactalblist = getIntent().getExtras().getStringArrayList("albumlist");
+        ArrayList<Album> mainactalblist = (ArrayList<Album>) getIntent().getExtras().get("albumlist");
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,9 +43,9 @@ public class AddAlbButton extends AppCompatActivity {
                     Toast.makeText(AddAlbButton.this, "Empty", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
-                        for (String albname : mainactalblist) {
-                            Log.d("debugtag", albname);
-                            if (newalbname.equals(albname)) {
+                        for (Album alb : mainactalblist) {
+                            Log.d("debugtag", alb.getName());
+                            if (newalbname.equals(alb.getName())) {
                                 dupe = true;
                                 Toast.makeText(AddAlbButton.this, "Duplicate album!", Toast.LENGTH_LONG).show();
 
@@ -57,8 +58,9 @@ public class AddAlbButton extends AppCompatActivity {
                     Log.d("debugtag", newalbname);
 
                     if(!dupe){
+                        Album newalb = new Album(newalbname, new ArrayList<Photo>());
                         Intent intent = new Intent();
-                        intent.putExtra("album", newalbname);
+                        intent.putExtra("album", newalb);
                         intent.putExtra("buttype", "add");
                         setResult(RESULT_OK, intent);
                         finish();
@@ -80,8 +82,8 @@ public class AddAlbButton extends AppCompatActivity {
                 }
                 else{
                     try{
-                        for(String albname : mainactalblist){
-                            if(alb_todelete.equals(albname)){
+                        for(Album alb : mainactalblist){
+                            if(alb_todelete.equals(alb.getName())){
                                 found = true;
                                 Intent intent = new Intent();
                                 intent.putExtra("album", alb_todelete);
