@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] albumnames;
     private Button addAlbum, deleteAlbum, renameAlbum;
     private ArrayAdapter<String> adapter;
+    private ArrayList<String> alblist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
+        if(resultCode == RESULT_CANCELED){
+            Log.d("degugtag", "do i get here");
+        }
+        if (resultCode == RESULT_OK) {
             if (data != null) {
                 String newalbum = data.getStringExtra("album");
                 Log.d("debugtag", newalbum);
@@ -57,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+
     }
+
 
 
 
