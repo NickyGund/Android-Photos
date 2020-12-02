@@ -7,11 +7,23 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/delButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="76dp"
+        android:text="@string/delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addButton"
+        app:layout_constraintTop_toBottomOf="@+id/album_editText" />
+
+    <Button
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="32dp"
         android:text="@string/add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/album_editText" />
@@ -25,7 +37,7 @@
         android:layout_marginEnd="60dp"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
-        android:hint="Enter new album name"
+        android:hint="Enter album name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

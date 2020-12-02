@@ -10,9 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android67">
         <activity
-            android:name=".AddButton"
-            android:parentActivityName=".MainActivity"
+            android:name=".EditAlbButton"
+            android:label="@string/title_activity_edit_alb_button"
+            android:theme="@style/Theme.Android67.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android67.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AddAlbButton"
             android:label="@string/title_activity_add_button"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Android67.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

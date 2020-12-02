@@ -2,7 +2,6 @@ package com.example.android67;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,16 +31,25 @@ public class MainActivity extends AppCompatActivity {
         albumlistview = findViewById(R.id.albumList);
         albumlistview.setAdapter(adapter);
         addAlbum = findViewById(R.id.addAlbum);
-        deleteAlbum = findViewById(R.id.deleteAlbum);
         renameAlbum = findViewById(R.id.renameAlbum);
 
         addAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddButton.class);
+                Intent intent = new Intent(MainActivity.this, AddAlbButton.class);
                 intent.putStringArrayListExtra("albumlist", alblist);
                 int requestCode = 1;
                 startActivityForResult(intent, requestCode);
+            }
+        });
+        renameAlbum.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EditAlbButton.class);
+                intent.putStringArrayListExtra("albumlist", alblist);
+                int requestcode = 2;
+                startActivityForResult(intent, requestcode);
             }
         });
     }
@@ -54,17 +61,21 @@ public class MainActivity extends AppCompatActivity {
         }
         if (resultCode == RESULT_OK) {
             if (data != null) {
-                String newalbum = data.getStringExtra("album");
-                Log.d("debugtag", newalbum);
-                adapter.add(newalbum);
-                adapter.notifyDataSetChanged();
-
+                String buttype = data.getStringExtra("buttype");
+                if(buttype.equals("add")) {
+                    String newalbum = data.getStringExtra("album");
+                    Log.d("debugtag", newalbum);
+                    adapter.add(newalbum);
+                    adapter.notifyDataSetChanged();
+                }
+                if(buttype.equals("delete")){
+                    String alb_todelete = data.getStringExtra("album");
+                    adapter.remove(alb_todelete);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
 
     }
-
-
-
 
 }

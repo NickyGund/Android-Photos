@@ -2,6 +2,7 @@
     <string name="app_name">Photos</string>
     <string name="album_name">album name</string>
     <string name="add">Add</string>
+    <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string-array name="album_array">
         <item>Photo Album</item>
@@ -16,5 +17,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_edit_alb_button">Rename Album Menu</string>
 
 </resources>
