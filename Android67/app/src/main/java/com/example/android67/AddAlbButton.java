@@ -33,7 +33,8 @@ public class AddAlbButton extends AppCompatActivity {
         newalbum = findViewById(R.id.album_editText);
         delete = findViewById(R.id.delButton);
 
-        ArrayList<Album> mainactalblist = (ArrayList<Album>) getIntent().getExtras().get("albumlist");
+        ArrayList<Album> mainactalblist =
+                (ArrayList<Album>) getIntent().getExtras().get("albumlist");
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +87,7 @@ public class AddAlbButton extends AppCompatActivity {
                             if(alb_todelete.equals(alb.getName())){
                                 found = true;
                                 Intent intent = new Intent();
-                                intent.putExtra("album", alb_todelete);
+                                intent.putExtra("album", alb);
                                 intent.putExtra("buttype", "delete");
                                 setResult(RESULT_OK, intent);
                                 finish();

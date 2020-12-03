@@ -27,6 +27,9 @@ class Album implements Serializable {
     public void setName(String name){
         this.name = name;
     }
+    public String toString(){ //used by listview
+        return name;
+    }
 
 }
 
@@ -39,7 +42,7 @@ class Photo{
 public class MainActivity extends AppCompatActivity {
 
     private ListView albumlistview;
-    private String[] albumnames;
+   // private String[] albumnames;
     private Button addAlbum, deleteAlbum, renameAlbum;
     private ArrayAdapter<Album> adapter;
     private ArrayList<Album> alblist;
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ArrayList<Album> alblist = new ArrayList<>();
-        albumnames = getResources().getStringArray(R.array.album_array);
+        //albumnames = getResources().getStringArray(R.array.album_array);
         adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
 
         albumlistview = findViewById(R.id.albumList);
@@ -80,32 +83,47 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_CANCELED){
+        if (resultCode == RESULT_CANCELED) {
             Log.d("degugtag", "do i get here");
         }
-        if (resultCode == RESULT_OK) {
-            if (data != null) {
-                String buttype = data.getStringExtra("buttype");
-                if(buttype.equals("add")) {
-                    Album newalbum = (Album)data.getSerializableExtra("album");
-                    Log.d("debugtag", newalbum.getName());
-                    adapter.add(newalbum);
-                    adapter.notifyDataSetChanged();
-                }
-                if(buttype.equals("delete")){
-                    String alb_todelete = data.getStringExtra("album");
-                    for (Album alb : alblist){
-                        if(alb.getName().equals(alb_todelete)){
-                            adapter.remove(alb);
-                            adapter.notifyDataSetChanged();
-                        }
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    String buttype = data.getStringExtra("buttype");
+                    if (buttype.equals("add")) {
+                        Album newalbum = (Album) data.getSerializableExtra("album");
+                        Log.d("debugtag", newalbum.getName());
+                        adapter.add(newalbum);
+                        adapter.notifyDataSetChanged();
                     }
+                    if (buttype.equals("delete")) {
+                        Log.d("debugtag", "just a test");
+                        Album albtodelete = (Album) data.getSerializableExtra("album");
+                        ;
+                        int position = adapter.getPosition(albtodelete);
+                        adapter.remove(adapter.getItem(position));
+                        adapter.notifyDataSetChanged();
 
-
+                    }
                 }
             }
-        }
 
+        }
+        if(requestCode == 2){
+            if(resultCode == RESULT_OK){
+                Log.d("debugtag", "What are the chances I get here?");
+                Bundle bundle = data.getExtras();
+                ArrayList<Album> updatelist = (ArrayList<Album>) bundle.getSerializable("albumlist");
+                for(Album alb : updatelist){
+                    Log.d("debugtag", alb.getName());
+                    adapter.add(alb);
+                }
+                adapter.notifyDataSetChanged();
+
+
+
+            }
+        }
     }
 
 }

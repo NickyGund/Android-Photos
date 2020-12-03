@@ -7,28 +7,43 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <Button
-        android:id="@+id/editbutton"
+        android:id="@+id/renButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="159dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="31dp"
         android:layout_marginEnd="159dp"
-        android:text="Edit"
+        android:text="Rename"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delalb_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/newalb_te" />
 
     <EditText
-        android:id="@+id/delalb_edittext"
+        android:id="@+id/oldalb_te"
         android:layout_width="272dp"
         android:layout_height="49dp"
         android:layout_marginStart="101dp"
         android:layout_marginTop="183dp"
         android:layout_marginEnd="100dp"
         android:ems="10"
-        android:hint="Enter album to be deleted"
+        android:hint="album name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/newalb_te"
+        android:layout_width="272dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="272dp"
+        android:layout_marginEnd="100dp"
+        android:ems="10"
+        android:hint="new album name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
