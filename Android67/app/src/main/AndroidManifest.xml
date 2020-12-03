@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android67">
         <activity
+            android:name=".PhotoGallery"
+            android:label="@string/title_activity_photo_gallery"
+            android:theme="@style/Theme.Android67.NoActionBar"></activity>
+        <activity
             android:name=".EditAlbButton"
             android:label="@string/title_activity_edit_alb_button"
             android:theme="@style/Theme.Android67.NoActionBar">

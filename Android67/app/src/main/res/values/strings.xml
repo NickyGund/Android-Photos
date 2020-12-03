@@ -18,5 +18,11 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_edit_alb_button">Rename Album Menu</string>
+    <string name="album_hint">Enter album name</string>
+    <string name="renbutton">Rename</string>
+    <string name="old_alb_hint">album name</string>
+    <string name="new_alb_hint">new album name</string>
+    <string name="title_activity_photo_gallery">PhotoGallery</string>
+    <string name="display">Display</string>
 
 </resources>

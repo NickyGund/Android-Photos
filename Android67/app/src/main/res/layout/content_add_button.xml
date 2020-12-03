@@ -37,7 +37,7 @@
         android:layout_marginEnd="60dp"
         android:background="@android:drawable/editbox_background"
         android:ems="10"
-        android:hint="Enter album name"
+        android:hint="@string/album_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

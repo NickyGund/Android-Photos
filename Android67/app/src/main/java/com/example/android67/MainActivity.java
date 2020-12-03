@@ -51,15 +51,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<Album> alblist = new ArrayList<>();
+        alblist = new ArrayList<>();
         //albumnames = getResources().getStringArray(R.array.album_array);
-        adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
-
         albumlistview = findViewById(R.id.albumList);
+        adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
         albumlistview.setAdapter(adapter);
         addAlbum = findViewById(R.id.addAlbum);
-        renameAlbum = findViewById(R.id.renameAlbum);
+        renameAlbum = findViewById(R.id.deleteAlbum);
 
+        albumlistview.setOnItemClickListener((p, V, pos, id) ->{
+            Log.d("debugtag", "click test");
+            showGallery(pos);
+        });
         addAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         renameAlbum.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, EditAlbButton.class);
@@ -80,6 +82,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void showGallery(int pos) {
+        int requestcode = 3;
+        Bundle bundle = new Bundle();
+        Album alb = alblist.get(pos);
+        Log.d("debugtag", "name is " + alb.getName());
+        bundle.putInt("index", pos);
+        bundle.putSerializable("album", alb);
+        Intent intent = new Intent(this, PhotoGallery.class);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, requestcode);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -93,16 +108,27 @@ public class MainActivity extends AppCompatActivity {
                     if (buttype.equals("add")) {
                         Album newalbum = (Album) data.getSerializableExtra("album");
                         Log.d("debugtag", newalbum.getName());
-                        adapter.add(newalbum);
+                        adapter = null;
+                        alblist.add(newalbum);
+                        adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
                         adapter.notifyDataSetChanged();
+                        albumlistview.setAdapter(adapter);
+
                     }
                     if (buttype.equals("delete")) {
                         Log.d("debugtag", "just a test");
                         Album albtodelete = (Album) data.getSerializableExtra("album");
-                        ;
-                        int position = adapter.getPosition(albtodelete);
-                        adapter.remove(adapter.getItem(position));
-                        adapter.notifyDataSetChanged();
+                        adapter = null;
+                        for(Album albs : alblist){
+                            Log.d("debugtag", albs.getName());
+                            if(albtodelete.getName().equals(albs.getName())){
+                                alblist.remove(albs);
+                                adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
+                                adapter.notifyDataSetChanged();
+                                albumlistview.setAdapter(adapter);
+                                break;
+                            }
+                        }
 
                     }
                 }
@@ -114,14 +140,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("debugtag", "What are the chances I get here?");
                 Bundle bundle = data.getExtras();
                 ArrayList<Album> updatelist = (ArrayList<Album>) bundle.getSerializable("albumlist");
+                adapter = null;
+                alblist.clear();
                 for(Album alb : updatelist){
                     Log.d("debugtag", alb.getName());
-                    adapter.add(alb);
+                    alblist.add(alb);
                 }
+                adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
                 adapter.notifyDataSetChanged();
-
-
-
+                albumlistview.setAdapter(adapter);
             }
         }
     }
