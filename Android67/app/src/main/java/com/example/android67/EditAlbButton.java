@@ -69,6 +69,9 @@ public class EditAlbButton extends AppCompatActivity {
                                 break;
                             }
                         }
+                        else{
+                            Toast.makeText(EditAlbButton.this, "Album does not exist", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
