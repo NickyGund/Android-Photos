@@ -12,12 +12,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/rel_layout"
+        <LinearLayout
+            android:id="@+id/lin_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:dividerPadding="5dp"
+            android:orientation="vertical" />
     </ScrollView>
 
     <LinearLayout

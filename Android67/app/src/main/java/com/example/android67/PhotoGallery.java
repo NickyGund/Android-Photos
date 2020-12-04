@@ -1,17 +1,23 @@
 package com.example.android67;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.net.URI;
@@ -21,10 +27,11 @@ import java.util.ArrayList;
 public class PhotoGallery extends AppCompatActivity {
 
     private Button add, delete, display;
-    private RelativeLayout relativeLayout;
+    private LinearLayout linearLayout;
     private static final int PHOTOPICKCODE = 1;
     private Album album_from_main;
     private ArrayList<Photo> photoalb;
+    private LinearLayout.LayoutParams lp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +49,9 @@ public class PhotoGallery extends AppCompatActivity {
         add = findViewById(R.id.addPhoto);
         delete = findViewById(R.id.delPhoto);
         display = findViewById(R.id.displayPhoto);
-        relativeLayout = findViewById(R.id.rel_layout);
+        linearLayout = findViewById(R.id.lin_layout);
+        lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0,30,0,30);
 
         for(Photo photo : photoalb){
             Log.d("debugtag", photo.getPath());
@@ -50,7 +59,8 @@ public class PhotoGallery extends AppCompatActivity {
             Uri myuri = Uri.parse(photopath);
             ImageView imageView = new ImageView(this);
             imageView.setImageURI(myuri);
-            relativeLayout.addView(imageView);
+            imageView.setLayoutParams(lp);
+            linearLayout.addView(imageView, lp);
         }
         Log.d("debugtag", album_from_main.getName());
 
@@ -85,7 +95,19 @@ public class PhotoGallery extends AppCompatActivity {
             album_from_main.setPhotolist(photoalb);
             ImageView imageView = new ImageView(this);
             imageView.setImageURI(myURI);
-            relativeLayout.addView(imageView);
+            imageView.setLayoutParams(lp);
+            linearLayout.addView(imageView, lp);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageView.setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);
+                    Log.d("debugtag", "img is selected");
+                    
+                }
+            });
+
+
+
         }
         }
 
