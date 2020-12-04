@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android67">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,11 @@
         <activity
             android:name=".PhotoGallery"
             android:label="@string/title_activity_photo_gallery"
-            android:theme="@style/Theme.Android67.NoActionBar"></activity>
+            android:theme="@style/Theme.Android67.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android67.MainActivity" />
+        </activity>
         <activity
             android:name=".EditAlbButton"
             android:label="@string/title_activity_edit_alb_button"
@@ -37,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

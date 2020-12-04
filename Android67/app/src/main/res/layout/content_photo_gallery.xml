@@ -33,32 +33,38 @@
 
 
         <Button
-            android:id="@+id/addAlbum"
+            android:id="@+id/addPhoto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:layout_weight="1"
             android:text="@string/add" />
 
 
         <Button
-            android:id="@+id/deleteAlbum"
+            android:id="@+id/delPhoto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:layout_weight="1"
             android:text="@string/delete" />
 
         <Button
-            android:id="@+id/displayButton"
+            android:id="@+id/displayPhoto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/display"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

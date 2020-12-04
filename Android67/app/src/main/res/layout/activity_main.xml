@@ -44,7 +44,7 @@
 
 
         <Button
-            android:id="@+id/deleteAlbum"
+            android:id="@+id/renAlbum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"

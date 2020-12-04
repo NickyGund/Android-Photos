@@ -3,6 +3,7 @@ package com.example.android67;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ class Album implements Serializable {
 
     String name;
     ArrayList<Photo> photolist;
+
     Album(String name, ArrayList<Photo> photolist){
         this.name = name;
         this.photolist = photolist;
@@ -27,16 +29,24 @@ class Album implements Serializable {
     public void setName(String name){
         this.name = name;
     }
+    public ArrayList<Photo> getPhotolist(){
+        return photolist;
+    }
+    public void setPhotolist(ArrayList<Photo> photolist){
+        this.photolist = photolist;
+    }
     public String toString(){ //used by listview
         return name;
     }
 
 }
-
-class Photo{
+class Photo implements Serializable{
     String path;
     Photo(String path){
         this.path = path;
+    }
+    public String getPath(){
+        return path;
     }
 }
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
         albumlistview.setAdapter(adapter);
         addAlbum = findViewById(R.id.addAlbum);
-        renameAlbum = findViewById(R.id.deleteAlbum);
+        renameAlbum = findViewById(R.id.renAlbum);
 
         albumlistview.setOnItemClickListener((p, V, pos, id) ->{
             Log.d("debugtag", "click test");
@@ -133,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-
         }
         if(requestCode == 2){
             if(resultCode == RESULT_OK){
@@ -149,6 +158,22 @@ public class MainActivity extends AppCompatActivity {
                 adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
                 adapter.notifyDataSetChanged();
                 albumlistview.setAdapter(adapter);
+            }
+        }
+        if(requestCode == 3){
+            if(resultCode == RESULT_OK){
+                Album albupdate = (Album) data.getSerializableExtra("album");
+                Log.d("debugtag", "back button check");
+                for (Album alb : alblist){
+                    if (albupdate.getName().equals(alb.getName())){
+                        int albindex = alblist.indexOf(alb);
+                        alblist.set(albindex, albupdate);
+                        adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
+                        adapter.notifyDataSetChanged();
+                        albumlistview.setAdapter(adapter);
+                        break;
+                    }
+                }
             }
         }
     }
