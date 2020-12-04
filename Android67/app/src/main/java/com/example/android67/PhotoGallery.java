@@ -32,6 +32,9 @@ public class PhotoGallery extends AppCompatActivity {
     private Album album_from_main;
     private ArrayList<Photo> photoalb;
     private LinearLayout.LayoutParams lp;
+    private ArrayList<ImageView> imgviewlist;
+    private String selected_img_path;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class PhotoGallery extends AppCompatActivity {
         Bundle bundle_from_main = getIntent().getExtras();
         album_from_main = (Album) bundle_from_main.getSerializable("album");
         photoalb = album_from_main.getPhotolist();
+        imgviewlist = new ArrayList<>();
 
         add = findViewById(R.id.addPhoto);
         delete = findViewById(R.id.delPhoto);
@@ -52,16 +56,8 @@ public class PhotoGallery extends AppCompatActivity {
         linearLayout = findViewById(R.id.lin_layout);
         lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0,30,0,30);
+        updateScreen(photoalb);
 
-        for(Photo photo : photoalb){
-            Log.d("debugtag", photo.getPath());
-            String photopath = photo.getPath();
-            Uri myuri = Uri.parse(photopath);
-            ImageView imageView = new ImageView(this);
-            imageView.setImageURI(myuri);
-            imageView.setLayoutParams(lp);
-            linearLayout.addView(imageView, lp);
-        }
         Log.d("debugtag", album_from_main.getName());
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +66,31 @@ public class PhotoGallery extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, PHOTOPICKCODE);
+            }
+        }) ;
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    for (ImageView imgview : imgviewlist){
+                        if (imgview.getColorFilter() != null){
+                            imgviewlist.remove(imgview);
+                            Log.d("debugtag", "this happens");
+                            for (Photo photo : photoalb){
+                                if(photo.getPath().equals(selected_img_path)){
+                                    Log.d("debugtag", "i guess im wondering if this happens");
+                                    photoalb.remove(photo);
+                                    album_from_main.setPhotolist(photoalb);
+                                    linearLayout.removeAllViewsInLayout();
+                                    updateScreen(photoalb);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -84,6 +105,27 @@ public class PhotoGallery extends AppCompatActivity {
         });
     }
 
+    private void updateScreen(ArrayList<Photo> photoalb) {
+        for(Photo photo : photoalb){
+            Log.d("debugtag", photo.getPath());
+            String photopath = photo.getPath();
+            Uri myuri = Uri.parse(photopath);
+            ImageView imageView = new ImageView(this);
+            imageView.setImageURI(myuri);
+            imageView.setLayoutParams(lp);
+            imgviewlist.add(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selected_img_path = photo.getPath();
+                    imageView.setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);
+                    Log.d("debugtag", "img is selected");
+                }
+            });
+            linearLayout.addView(imageView, lp);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -96,21 +138,19 @@ public class PhotoGallery extends AppCompatActivity {
             ImageView imageView = new ImageView(this);
             imageView.setImageURI(myURI);
             imageView.setLayoutParams(lp);
+            imgviewlist.add(imageView);
             linearLayout.addView(imageView, lp);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    selected_img_path = uri;
                     imageView.setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);
                     Log.d("debugtag", "img is selected");
-                    
                 }
             });
 
-
-
         }
         }
-
 
 
 }
