@@ -24,5 +24,8 @@
     <string name="new_alb_hint">new album name</string>
     <string name="title_activity_photo_gallery">PhotoGallery</string>
     <string name="display">Display</string>
+    <string name="move">Move</string>
+    <string name="title_activity_display_photo">DisplayPhoto</string>
+    <string name="taghint">Tags will be shown here</string>
 
 </resources>

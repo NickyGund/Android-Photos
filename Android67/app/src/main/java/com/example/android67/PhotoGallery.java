@@ -26,14 +26,16 @@ import java.util.ArrayList;
 
 public class PhotoGallery extends AppCompatActivity {
 
-    private Button add, delete, display;
+    private Button add, delete, display, move;
     private LinearLayout linearLayout;
     private static final int PHOTOPICKCODE = 1;
+    private static final int DISPLAYPHOTOCODE = 2;
     private Album album_from_main;
     private ArrayList<Photo> photoalb;
     private LinearLayout.LayoutParams lp;
     private ArrayList<ImageView> imgviewlist;
     private String selected_img_path;
+    private ImageView selectedimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,9 @@ public class PhotoGallery extends AppCompatActivity {
         add = findViewById(R.id.addPhoto);
         delete = findViewById(R.id.delPhoto);
         display = findViewById(R.id.displayPhoto);
+        move = findViewById(R.id.movPhoto);
         linearLayout = findViewById(R.id.lin_layout);
+
         lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0,30,0,30);
         updateScreen(photoalb);
@@ -93,6 +97,16 @@ public class PhotoGallery extends AppCompatActivity {
                 }
             }
         });
+        display.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PhotoGallery.this, DisplayPhoto.class);
+                intent.putExtra("album", photoalb);
+                startActivityForResult(intent, DISPLAYPHOTOCODE);
+
+            }
+        });
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +134,14 @@ public class PhotoGallery extends AppCompatActivity {
                     selected_img_path = photo.getPath();
                     imageView.setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);
                     Log.d("debugtag", "img is selected");
+
+                    for (ImageView imgview : imgviewlist){
+                        if(imgview != imageView){
+                            if(imgview.getColorFilter() != null){
+                                imgview.setColorFilter(null);
+                            }
+                        }
+                    }
                 }
             });
             linearLayout.addView(imageView, lp);
@@ -146,6 +168,14 @@ public class PhotoGallery extends AppCompatActivity {
                     selected_img_path = uri;
                     imageView.setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);
                     Log.d("debugtag", "img is selected");
+
+                    for (ImageView imgview : imgviewlist){
+                        if(imgview != imageView){
+                            if(imgview.getColorFilter() != null){
+                                imgview.setColorFilter(null);
+                            }
+                        }
+                    }
                 }
             });
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android67">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Android67">
+        <activity
+            android:name=".DisplayPhoto"
+            android:label="@string/title_activity_display_photo"
+            android:theme="@style/Theme.Android67.NoActionBar"></activity>
         <activity
             android:name=".PhotoGallery"
             android:label="@string/title_activity_photo_gallery"
@@ -43,7 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
