@@ -42,11 +42,27 @@ class Album implements Serializable {
 }
 class Photo implements Serializable{
     String path;
-    Photo(String path){
+    ArrayList<String> location_tags;
+    ArrayList<String> person_tags;
+    Photo(String path, ArrayList<String> location_tags, ArrayList<String> person_tags){
         this.path = path;
+        this.location_tags = location_tags;
+        this.person_tags = person_tags;
     }
     public String getPath(){
         return path;
+    }
+    public ArrayList<String> getPersonTags(){
+        return person_tags;
+    }
+    public void setPersonTags(ArrayList<String> person_tags){
+        this.person_tags = person_tags;
+    }
+    public ArrayList<String> getLocationTags(){
+        return location_tags;
+    }
+    public void setLocationTags(ArrayList<String> location_tags){
+        this.location_tags = location_tags;
     }
 }
 public class MainActivity extends AppCompatActivity {

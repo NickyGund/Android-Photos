@@ -101,9 +101,21 @@ public class PhotoGallery extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PhotoGallery.this, DisplayPhoto.class);
-                intent.putExtra("album", photoalb);
-                startActivityForResult(intent, DISPLAYPHOTOCODE);
+                try{
+                    for(Photo photo :photoalb){
+                        if(photo.getPath().equals(selected_img_path)){
+                            Bundle bundle = new Bundle();
+                            Intent intent = new Intent(PhotoGallery.this, DisplayPhoto.class);
+                            bundle.putString("photopath",selected_img_path);
+                            bundle.putSerializable("album", album_from_main);
+                            intent.putExtras(bundle);
+                            startActivityForResult(intent, DISPLAYPHOTOCODE);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
@@ -154,7 +166,8 @@ public class PhotoGallery extends AppCompatActivity {
         if(requestCode == PHOTOPICKCODE && data != null){
             String uri = data.getData().toString();
             Uri myURI = Uri.parse(uri);
-            Photo newphoto = new Photo(uri);
+            ArrayList<String> tags = new ArrayList<>();
+            Photo newphoto = new Photo(uri, tags, tags);
             photoalb.add(newphoto);
             album_from_main.setPhotolist(photoalb);
             ImageView imageView = new ImageView(this);

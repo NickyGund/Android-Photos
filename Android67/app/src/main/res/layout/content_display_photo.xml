@@ -8,57 +8,46 @@
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="155dp"
-        android:layout_marginEnd="23dp"
-        app:layout_constraintEnd_toStartOf="@+id/displayView"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/forwardButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addTag"
         app:srcCompat="@drawable/abc_vector_test" />
 
     <ImageButton
         android:id="@+id/forwardButton"
-        android:layout_width="48dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="155dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="105dp"
         android:rotationY="180"
-        app:layout_constraintStart_toEndOf="@+id/displayView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/abc_vector_test" />
-
-    <View
-        android:id="@+id/displayView"
-        android:layout_width="236dp"
-        android:layout_height="140dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toBottomOf="@+id/delTag"
+        app:srcCompat="@drawable/abc_vector_test" />
 
     <TextView
         android:id="@+id/tagTextView"
-        android:layout_width="285dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="42dp"
+        android:layout_width="280dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/taghint"
         android:textIsSelectable="false"
-        app:layout_constraintEnd_toStartOf="@+id/forwardButton"
-        app:layout_constraintHorizontal_bias="0.44"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
-        app:layout_constraintTop_toBottomOf="@+id/displayView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLay" />
 
     <Button
         android:id="@+id/addTag"
         android:layout_width="108dp"
         android:layout_height="42dp"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="44dp"
         android:text="Add Tag"
         app:layout_constraintEnd_toStartOf="@+id/delTag"
@@ -70,11 +59,26 @@
         android:layout_width="108dp"
         android:layout_height="42dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="87dp"
         android:text="@string/delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addTag"
         app:layout_constraintTop_toBottomOf="@+id/tagTextView" />
+
+    <FrameLayout
+        android:id="@+id/frameLay"
+        android:layout_width="283dp"
+        android:layout_height="168dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/tagTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
