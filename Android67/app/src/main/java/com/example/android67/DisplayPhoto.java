@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -23,7 +20,7 @@ import java.util.ArrayList;
 
 public class DisplayPhoto extends AppCompatActivity {
 
-    private Button addtag, deletetag;
+    private Button tagbutton;
     private FrameLayout frameLayout;
     private TextView tagtextbox;
     private ImageButton backarrow, forwardarrow;
@@ -31,6 +28,7 @@ public class DisplayPhoto extends AppCompatActivity {
     private ArrayList<Photo> alb;
     private int pos_in_alb;
     private int albsize;
+    private static int TAGMENUCODE = 1;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -42,8 +40,7 @@ public class DisplayPhoto extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        addtag = findViewById(R.id.addTag);
-        deletetag = findViewById(R.id.delTag);
+        tagbutton = findViewById(R.id.tagButton);
         frameLayout = findViewById(R.id.frameLay);
         tagtextbox = findViewById(R.id.tagTextView);
         backarrow = findViewById(R.id.backButton);
@@ -95,9 +92,21 @@ public class DisplayPhoto extends AppCompatActivity {
             }
         });
 
+        tagbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Photo photo = alb.get(pos_in_alb);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("photo", photo);
+                Intent intent = new Intent(DisplayPhoto.this, TagMenu.class);
+                startActivityForResult(intent, TAGMENUCODE);
+            }
+        });
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //need to put a bundle here so i can put seralizable
                 Intent intent = new Intent();
                 intent.putExtra("album", albumfromgallery);
                 setResult(RESULT_OK, intent);
@@ -106,8 +115,9 @@ public class DisplayPhoto extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateDisplay(String path, Album album) {
-        String loctagstring = "";
+        String loctagstring = "Location: ";
         String persontagstring = "Person: ";
         pos_in_alb = 0;
         Uri myuri = Uri.parse(path);

@@ -98,7 +98,6 @@ public class PhotoGallery extends AppCompatActivity {
             }
         });
         display.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 try{
@@ -115,7 +114,6 @@ public class PhotoGallery extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
 
             }
         });

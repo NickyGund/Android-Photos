@@ -27,5 +27,6 @@
     <string name="move">Move</string>
     <string name="title_activity_display_photo">DisplayPhoto</string>
     <string name="taghint">Tags will be shown here</string>
+    <string name="title_activity_tag_menu">TagMenu</string>
 
 </resources>
