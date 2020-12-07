@@ -193,9 +193,10 @@ public class PhotoGallery extends AppCompatActivity {
 
         }
         else if(requestCode == DISPLAYPHOTOCODE){
-           // Album albumfromdisplay = (Album) data.getSerializableExtra("album");
-            //linearLayout.removeAllViewsInLayout();
-            //updateScreen(albumfromdisplay.getPhotolist());
+            Album albumfromdisplay = (Album) data.getSerializableExtra("album");
+            this.album_from_main = albumfromdisplay;
+            linearLayout.removeAllViewsInLayout();
+            updateScreen(albumfromdisplay.getPhotolist());
         }
         }
 
