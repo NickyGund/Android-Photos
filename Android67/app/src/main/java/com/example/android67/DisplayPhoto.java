@@ -144,6 +144,9 @@ public class DisplayPhoto extends AppCompatActivity {
                     }
                     tagtextbox.setText(loctagstring + '\n' + persontagstring);
                     }
+                else{
+                    tagtextbox.setText("No tags yet");
+                }
                 break;
                 }
             else {
