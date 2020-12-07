@@ -81,7 +81,7 @@ public class DisplayPhoto extends AppCompatActivity {
                 if(albsize == 1){
                     Toast.makeText(DisplayPhoto.this, "Only one photo in the album", Toast.LENGTH_SHORT).show();
                 }
-                else if (pos_in_alb + 1 > albsize) {
+                else if (pos_in_alb + 1 >= albsize) {
                     Toast.makeText(DisplayPhoto.this, "There are no photos after this", Toast.LENGTH_SHORT).show();
                 } else {
                     pos_in_alb += 1;
