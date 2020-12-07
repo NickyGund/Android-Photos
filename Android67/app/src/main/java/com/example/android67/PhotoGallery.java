@@ -164,8 +164,9 @@ public class PhotoGallery extends AppCompatActivity {
         if(requestCode == PHOTOPICKCODE && data != null){
             String uri = data.getData().toString();
             Uri myURI = Uri.parse(uri);
-            ArrayList<String> tags = new ArrayList<>();
-            Photo newphoto = new Photo(uri, tags, tags);
+            ArrayList<String> persontags = new ArrayList<>();
+            ArrayList<String> locationtags = new ArrayList<>();
+            Photo newphoto = new Photo(uri, persontags, locationtags);
             photoalb.add(newphoto);
             album_from_main.setPhotolist(photoalb);
             ImageView imageView = new ImageView(this);
@@ -190,6 +191,11 @@ public class PhotoGallery extends AppCompatActivity {
                 }
             });
 
+        }
+        else if(requestCode == DISPLAYPHOTOCODE){
+           // Album albumfromdisplay = (Album) data.getSerializableExtra("album");
+            //linearLayout.removeAllViewsInLayout();
+            //updateScreen(albumfromdisplay.getPhotolist());
         }
         }
 

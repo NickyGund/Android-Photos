@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -29,6 +30,7 @@ public class DisplayPhoto extends AppCompatActivity {
     private int pos_in_alb;
     private int albsize;
     private static int TAGMENUCODE = 1;
+    private Album albumfromgallery;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -42,29 +44,26 @@ public class DisplayPhoto extends AppCompatActivity {
 
         tagbutton = findViewById(R.id.tagButton);
         frameLayout = findViewById(R.id.frameLay);
-        tagtextbox = findViewById(R.id.tagTextView);
+        tagtextbox = findViewById(R.id.tagboxTextView);
         backarrow = findViewById(R.id.backButton);
         forwardarrow = findViewById(R.id.forwardButton);
-        loctags = new ArrayList<>();
-        persontags = new ArrayList<>();
+
 
         //get intent data here
         Bundle bundle_from_gallery = getIntent().getExtras();
         String photopath = bundle_from_gallery.getString("photopath");
-        Album albumfromgallery = (Album) bundle_from_gallery.getSerializable("album");
+        albumfromgallery = (Album) bundle_from_gallery.getSerializable("album");
         alb = albumfromgallery.getPhotolist();
         albsize = alb.size();
         updateDisplay(photopath, albumfromgallery);
 
 
-
         backarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pos_in_alb == 0){
-                    Toast.makeText(DisplayPhoto.this,"There are no photos before this one!", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if (pos_in_alb == 0) {
+                    Toast.makeText(DisplayPhoto.this, "There are no photos before this one!", Toast.LENGTH_SHORT).show();
+                } else {
                     pos_in_alb -= 1;
                     Photo backphoto = alb.get(pos_in_alb);
                     String backphotopath = backphoto.getPath();
@@ -75,14 +74,16 @@ public class DisplayPhoto extends AppCompatActivity {
             }
         });
 
-
         forwardarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pos_in_alb + 1 >= albsize){
-                    Toast.makeText(DisplayPhoto.this, "There are no photos after this", Toast.LENGTH_SHORT).show();
+                Log.d("debugtag", String.valueOf(pos_in_alb));
+                if(albsize == 1){
+                    Toast.makeText(DisplayPhoto.this, "Only one photo in the album", Toast.LENGTH_SHORT).show();
                 }
-                else{
+                else if (pos_in_alb + 1 > albsize) {
+                    Toast.makeText(DisplayPhoto.this, "There are no photos after this", Toast.LENGTH_SHORT).show();
+                } else {
                     pos_in_alb += 1;
                     Photo forwardphoto = alb.get(pos_in_alb);
                     String forwardphotopath = forwardphoto.getPath();
@@ -95,10 +96,12 @@ public class DisplayPhoto extends AppCompatActivity {
         tagbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Photo photo = alb.get(pos_in_alb);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("photo", photo);
                 Intent intent = new Intent(DisplayPhoto.this, TagMenu.class);
+                Photo photo = alb.get(pos_in_alb);
+                Log.d("debugtag", photo.getPath());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("photofromdisplay", photo);
+                intent.putExtras(bundle);
                 startActivityForResult(intent, TAGMENUCODE);
             }
         });
@@ -117,46 +120,59 @@ public class DisplayPhoto extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void updateDisplay(String path, Album album) {
+        Log.d("debugtag", "updatedisplay");
         String loctagstring = "Location: ";
         String persontagstring = "Person: ";
         pos_in_alb = 0;
+        boolean found = false;
         Uri myuri = Uri.parse(path);
         ImageView imageView = new ImageView(this);
         imageView.setImageURI(myuri);
         frameLayout.addView(imageView);
-        for(Photo photo : album.getPhotolist()){
-            if(photo.getPath().equals(path)){
+        for (Photo photo : album.getPhotolist()) {
+            if (photo.getPath().equals(path)) {
+                Log.d("debugtag", "posvalue is " +  pos_in_alb);
                 loctags = photo.getLocationTags();
                 persontags = photo.getPersonTags();
-                if(loctags.isEmpty() && persontags.isEmpty()){
-                    break;
-                }
-                else if(loctags.isEmpty() && !persontags.isEmpty()){
-                    for (String string : persontags){
-                        persontagstring += string + ", ";
-                        tagtextbox.setText(persontagstring + '\n' + loctagstring);
+                if (!persontags.isEmpty() || !loctags.isEmpty()) {
+                    for (String tag : persontags) {
+                        persontagstring += tag + ", ";
                     }
-                }
-                else if(!loctags.isEmpty() && persontags.isEmpty()){
-                    for (String string : loctags){
-                        loctagstring += string + ", ";
-                        tagtextbox.setText(loctagstring + "\n" + persontagstring);
+                    for (String loctag : loctags) {
+                        Log.d("debugtag", loctag);
+                        loctagstring += loctag + ", ";
                     }
-                }
-                else{
-                    for (String personstring : persontags){
-                        persontagstring += personstring + ", ";
+                    tagtextbox.setText(loctagstring + '\n' + persontagstring);
                     }
-                    for (String locstring : loctags){
-                        loctagstring += locstring + ", ";
-                    }
-                    tagtextbox.setText(persontagstring + '\n' + loctagstring);
+                break;
                 }
-            }
-            else{
+            else {
                 pos_in_alb += 1;
             }
         }
+        Log.d("debugtag", "posvalue is " +  pos_in_alb);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("debugtag", "do i get to the activity result?");
+        if(requestCode == 1){
+            Log.d("debugtag", "do i get into the requestcode?");
+            Photo photofrommenu = (Photo) data.getSerializableExtra("photo");
+            String photostring = photofrommenu.getPath();
+            int counter = 0;
+            for (Photo photo :  alb){
+                if(photo.getPath().equals(photofrommenu.getPath())){
+                    alb.set(counter, photofrommenu);
+                }
+                else{
+                    counter += 1;
+                }
+            }
+            updateDisplay(photostring, albumfromgallery);
+        }
     }
 }
+
+

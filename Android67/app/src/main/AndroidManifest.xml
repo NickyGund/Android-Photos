@@ -14,7 +14,11 @@
         <activity
             android:name=".TagMenu"
             android:label="@string/title_activity_tag_menu"
-            android:theme="@style/Theme.Android67.NoActionBar"></activity>
+            android:theme="@style/Theme.Android67.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android67.DisplayPhoto" />
+        </activity>
         <activity
             android:name=".DisplayPhoto"
             android:label="@string/title_activity_display_photo"
@@ -22,6 +26,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android67.PhotoGallery" />
+
         </activity>
         <activity
             android:name=".PhotoGallery"

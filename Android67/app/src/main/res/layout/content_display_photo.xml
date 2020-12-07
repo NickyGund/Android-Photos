@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/abc_vector_test" />
 
     <TextView
-        android:id="@+id/tagTextView"
+        android:id="@+id/tagboxTextView"
         android:layout_width="280dp"
         android:layout_height="54dp"
         android:layout_marginStart="19dp"
@@ -50,7 +50,7 @@
         android:layout_marginTop="12dp"
         android:text="Add/Delete Tag"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/tagboxTextView" />
 
     <FrameLayout
         android:id="@+id/frameLay"
@@ -60,7 +60,7 @@
         android:layout_marginTop="44dp"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="14dp"
-        app:layout_constraintBottom_toTopOf="@+id/tagTextView"
+        app:layout_constraintBottom_toTopOf="@+id/tagboxTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
