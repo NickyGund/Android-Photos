@@ -29,8 +29,9 @@ public class SearchResult extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         linlayout = findViewById(R.id.linear_layout);
+        linlayout.removeAllViewsInLayout();
 
-       photos = (ArrayList<Photo>) getIntent().getExtras().get("photolist");
+        photos = (ArrayList<Photo>) getIntent().getExtras().get("photolist");
 
        for (Photo photo : photos){
            Log.d("debugtag", "are photos passed?");
@@ -44,6 +45,8 @@ public class SearchResult extends AppCompatActivity {
        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               linlayout.removeAllViewsInLayout();
+               photos.clear();
                finish();
            }
        });

@@ -37,12 +37,12 @@ public class SearchMenu extends AppCompatActivity {
         persontag = findViewById(R.id.personTagInput);
         locationtag = findViewById(R.id.locationTagInput);
         searchresults = new ArrayList<>();
-
         mainactalblist = (ArrayList<Album>) getIntent().getExtras().get("albumlist");
 
         or.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                searchresults.clear();
                 String personinput = persontag.getText().toString().trim();
                 String locationinput = locationtag.getText().toString().trim();
                 if (personinput.isEmpty() || locationinput.isEmpty()) {
@@ -94,6 +94,61 @@ public class SearchMenu extends AppCompatActivity {
                         }
                     }
                     // add intent here
+                    Intent intent = new Intent(SearchMenu.this, SearchResult.class);
+                    intent.putExtra("photolist", searchresults);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        and.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                searchresults.clear();
+                String personinput = persontag.getText().toString().trim();
+                String locationinput = locationtag.getText().toString().trim();
+                if (personinput.isEmpty() || locationinput.isEmpty()) {
+                    Toast.makeText(SearchMenu.this, "Please have a locationtag and a persontag inputted", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    for (Album alb : mainactalblist) {
+                       for (Photo photo : alb.getPhotolist()){
+                           boolean tagfound = false;
+                           ArrayList<String> persontags = photo.getPersonTags();
+                           ArrayList<String> locationtags = photo.getLocationTags();
+                           for(String persontag : persontags){
+                               tagfound = true;
+                               for( int i =0; i<personinput.length(); i++){
+                                   if(personinput.charAt(i) == persontag.charAt(i)){
+                                        continue;
+                                   }
+                                   else{
+                                       tagfound = false;
+                                       //tagnotfound
+                                   }
+                               }
+                               if(tagfound){
+                                   boolean location;
+                                   for (String loctag : locationtags){
+                                       location = true;
+                                       for(int i =0; i<locationinput.length(); i++){
+                                           if(locationinput.charAt(i) == loctag.charAt(i)){
+                                               continue;
+                                           }
+                                           else{
+                                               location = false;
+                                           }
+                                       }
+                                       if(location == true){
+                                           searchresults.add(photo);
+                                       }
+                                   }
+                               }
+                           }
+
+                       }
+                    }
                     Intent intent = new Intent(SearchMenu.this, SearchResult.class);
                     intent.putExtra("photolist", searchresults);
                     startActivity(intent);
