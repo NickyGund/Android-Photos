@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         renameAlbum = findViewById(R.id.renAlbum);
         searchPhotos = findViewById(R.id.searchPhotos);
 
+
         albumlistview.setOnItemClickListener((p, V, pos, id) ->{
             Log.d("debugtag", "click test");
             showGallery(pos);
@@ -197,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 Album albupdate = (Album) data.getSerializableExtra("album");
                 Log.d("debugtag", "back button check");
                 for (Album alb : alblist){
+                    Log.d("debugtag", alb.getName());
                     if (albupdate.getName().equals(alb.getName())){
                         int albindex = alblist.indexOf(alb);
                         alblist.set(albindex, albupdate);
@@ -205,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
                         albumlistview.setAdapter(adapter);
                         break;
                     }
+
                 }
             }
         }

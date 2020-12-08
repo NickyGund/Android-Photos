@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android67">
         <activity
+            android:name=".SearchResult"
+            android:label="@string/title_activity_search_result"
+            android:theme="@style/Theme.Android67.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android67.SearchMenu" />
+        </activity>
+        <activity
             android:name=".SearchMenu"
             android:label="@string/title_activity_search_menu"
             android:theme="@style/Theme.Android67.NoActionBar">

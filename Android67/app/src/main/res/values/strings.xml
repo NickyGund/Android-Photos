@@ -31,5 +31,6 @@
     <string name="destination_album">Destination Album</string>
     <string name="search">Search</string>
     <string name="title_activity_search_menu">SearchMenu</string>
+    <string name="title_activity_search_result">SearchResult</string>
 
 </resources>
