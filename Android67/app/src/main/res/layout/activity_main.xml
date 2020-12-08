@@ -33,13 +33,23 @@
 
 
         <Button
+            android:id="@+id/searchPhotos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/search" />
+
+        <Button
             android:id="@+id/addAlbum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Add/Delete" />
 
 
@@ -47,11 +57,9 @@
             android:id="@+id/renAlbum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:text="Rename" />
     </LinearLayout>
 

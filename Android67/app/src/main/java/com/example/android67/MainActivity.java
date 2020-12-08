@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView albumlistview;
    // private String[] albumnames;
-    private Button addAlbum, deleteAlbum, renameAlbum;
+    private Button addAlbum, searchPhotos, renameAlbum;
     private ArrayAdapter<Album> adapter;
     private ArrayList<Album> alblist;
 
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         albumlistview.setAdapter(adapter);
         addAlbum = findViewById(R.id.addAlbum);
         renameAlbum = findViewById(R.id.renAlbum);
+        searchPhotos = findViewById(R.id.searchPhotos);
 
         albumlistview.setOnItemClickListener((p, V, pos, id) ->{
             Log.d("debugtag", "click test");
@@ -105,6 +107,19 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("albumlist", alblist);
                 int requestcode = 2;
                 startActivityForResult(intent, requestcode);
+            }
+        });
+        searchPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(alblist.isEmpty()){
+                    Toast.makeText(MainActivity.this, "There are no albums to search through", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(MainActivity.this, SearchMenu.class);
+                    intent.putExtra("albumlist", alblist);
+                    startActivity(intent);
+                }
             }
         });
     }

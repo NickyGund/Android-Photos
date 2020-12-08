@@ -29,5 +29,7 @@
     <string name="taghint">Tags will be shown here</string>
     <string name="title_activity_tag_menu">TagMenu</string>
     <string name="destination_album">Destination Album</string>
+    <string name="search">Search</string>
+    <string name="title_activity_search_menu">SearchMenu</string>
 
 </resources>

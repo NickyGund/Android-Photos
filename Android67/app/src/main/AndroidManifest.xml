@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android67">
         <activity
+            android:name=".SearchMenu"
+            android:label="@string/title_activity_search_menu"
+            android:theme="@style/Theme.Android67.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android67.MainActivity" />
+        </activity>
+        <activity
             android:name=".TagMenu"
             android:label="@string/title_activity_tag_menu"
             android:theme="@style/Theme.Android67.NoActionBar">
@@ -26,7 +34,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android67.PhotoGallery" />
-
         </activity>
         <activity
             android:name=".PhotoGallery"
