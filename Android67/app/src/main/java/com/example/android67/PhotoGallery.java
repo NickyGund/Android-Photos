@@ -31,12 +31,14 @@ public class PhotoGallery extends AppCompatActivity {
     private LinearLayout linearLayout;
     private static final int PHOTOPICKCODE = 1;
     private static final int DISPLAYPHOTOCODE = 2;
+    private static final int MOVECODE = 3;
     private Album album_from_main;
     private ArrayList<Photo> photoalb;
     private LinearLayout.LayoutParams lp;
     private ArrayList<ImageView> imgviewlist;
     private String selected_img_path;
     private ImageView selectedimage;
+    private ArrayList<Album> alblist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class PhotoGallery extends AppCompatActivity {
 
         Bundle bundle_from_main = getIntent().getExtras();
         album_from_main = (Album) bundle_from_main.getSerializable("album");
+        alblist = (ArrayList<Album>)bundle_from_main.getSerializable("alblist");
         photoalb = album_from_main.getPhotolist();
         imgviewlist = new ArrayList<>();
 
@@ -96,6 +99,24 @@ public class PhotoGallery extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        move.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try{
+                    Log.d("debugtag", "this happens");
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(PhotoGallery.this, MovePhoto.class);
+                    Log.d("debugtag", "this happens2");
+                    bundle.putString("photopath",selected_img_path);
+                    bundle.putSerializable("album", album_from_main);
+                    intent.putExtras(bundle);
+                    Log.d("debugtag", "this happens3");
+                    startActivityForResult(intent, MOVECODE);
+                }
+                catch(Exception e){
+                    e.printStackTrace();}
             }
         });
         display.setOnClickListener(new View.OnClickListener(){

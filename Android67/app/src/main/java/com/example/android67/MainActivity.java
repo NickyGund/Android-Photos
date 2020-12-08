@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("debugtag", "name is " + alb.getName());
         bundle.putInt("index", pos);
         bundle.putSerializable("album", alb);
+        bundle.putSerializable("alblist", alblist);
         Intent intent = new Intent(this, PhotoGallery.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, requestcode);
