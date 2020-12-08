@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -162,34 +163,45 @@ public class PhotoGallery extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PHOTOPICKCODE && data != null){
+            boolean dupe = false;
             String uri = data.getData().toString();
-            Uri myURI = Uri.parse(uri);
-            ArrayList<String> persontags = new ArrayList<>();
-            ArrayList<String> locationtags = new ArrayList<>();
-            Photo newphoto = new Photo(uri, persontags, locationtags);
-            photoalb.add(newphoto);
-            album_from_main.setPhotolist(photoalb);
-            ImageView imageView = new ImageView(this);
-            imageView.setImageURI(myURI);
-            imageView.setLayoutParams(lp);
-            imgviewlist.add(imageView);
-            linearLayout.addView(imageView, lp);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selected_img_path = uri;
-                    imageView.setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);
-                    Log.d("debugtag", "img is selected");
+            for (Photo photo : photoalb){
+                if(photo.getPath().equals(uri)){
+                    dupe = true;
+                }
+            }
+            if(dupe == false) {
+                Uri myURI = Uri.parse(uri);
+                ArrayList<String> persontags = new ArrayList<>();
+                ArrayList<String> locationtags = new ArrayList<>();
+                Photo newphoto = new Photo(uri, persontags, locationtags);
+                photoalb.add(newphoto);
+                album_from_main.setPhotolist(photoalb);
+                ImageView imageView = new ImageView(this);
+                imageView.setImageURI(myURI);
+                imageView.setLayoutParams(lp);
+                imgviewlist.add(imageView);
+                linearLayout.addView(imageView, lp);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selected_img_path = uri;
+                        imageView.setColorFilter(Color.BLUE, PorterDuff.Mode.LIGHTEN);
+                        Log.d("debugtag", "img is selected");
 
-                    for (ImageView imgview : imgviewlist){
-                        if(imgview != imageView){
-                            if(imgview.getColorFilter() != null){
-                                imgview.setColorFilter(null);
+                        for (ImageView imgview : imgviewlist) {
+                            if (imgview != imageView) {
+                                if (imgview.getColorFilter() != null) {
+                                    imgview.setColorFilter(null);
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
+            else{
+                Toast.makeText(PhotoGallery.this, "This photo already exists in this album!", Toast.LENGTH_SHORT).show();
+            }
 
         }
         else if(requestCode == DISPLAYPHOTOCODE){
