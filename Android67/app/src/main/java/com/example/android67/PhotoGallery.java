@@ -105,20 +105,25 @@ public class PhotoGallery extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 try{
-                    Log.d("debugtag", "this happens");
-                    Bundle bundle = new Bundle();
-                    Intent intent = new Intent(PhotoGallery.this, MovePhoto.class);
-                    Log.d("debugtag", "this happens2");
-                    bundle.putString("photopath",selected_img_path);
-                    bundle.putSerializable("album", album_from_main);
-                    intent.putExtras(bundle);
-                    Log.d("debugtag", "this happens3");
-                    startActivityForResult(intent, MOVECODE);
+                    for(Photo photo :photoalb){
+                        if(photo.getPath().equals(selected_img_path)){
+                            Log.d("debugtag", "this happens");
+                            Bundle bundle = new Bundle();
+                            Intent intent = new Intent(PhotoGallery.this, MovePhoto.class);
+                            Log.d("debugtag", "this happens2");
+                            bundle.putString("photopath",selected_img_path);
+                            bundle.putSerializable("album", album_from_main);
+                            intent.putExtras(bundle);
+                            Log.d("debugtag", "this happens3");
+                            startActivityForResult(intent, MOVECODE);
+                        }
+                    }
                 }
                 catch(Exception e){
                     e.printStackTrace();}
             }
         });
+
         display.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

@@ -32,5 +32,6 @@
     <string name="search">Search</string>
     <string name="title_activity_search_menu">SearchMenu</string>
     <string name="title_activity_search_result">SearchResult</string>
+    <string name="title_activity_move_photo">MovePhoto</string>
 
 </resources>
