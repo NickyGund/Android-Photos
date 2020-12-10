@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class DisplayPhoto extends AppCompatActivity {
@@ -176,6 +179,20 @@ public class DisplayPhoto extends AppCompatActivity {
             updateDisplay(photostring, albumfromgallery);
         }
     }
+    /*@Override
+    protected void onStop(){
+        super.onStop();
+
+        try{
+            FileOutputStream fos= new FileOutputStream("myfile");
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+            oos.writeObject(alblist);
+            oos.close();
+            fos.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }*/
 }
 
 

@@ -21,10 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class PhotoGallery extends AppCompatActivity {
 
     private Button add, delete, display, move;
@@ -52,7 +56,8 @@ public class PhotoGallery extends AppCompatActivity {
 
         Bundle bundle_from_main = getIntent().getExtras();
         album_from_main = (Album) bundle_from_main.getSerializable("album");
-        alblist = (ArrayList<Album>)bundle_from_main.getSerializable("alblist");
+        alblist = (ArrayList<Album>) bundle_from_main.getSerializable("alblist_from_main");
+        Log.d("debug_tag",alblist.toString());
         photoalb = album_from_main.getPhotolist();
         imgviewlist = new ArrayList<>();
 
@@ -135,6 +140,7 @@ public class PhotoGallery extends AppCompatActivity {
                             Intent intent = new Intent(PhotoGallery.this, DisplayPhoto.class);
                             bundle.putString("photopath",selected_img_path);
                             bundle.putSerializable("album", album_from_main);
+                            bundle.putSerializable("alblist",alblist);
                             intent.putExtras(bundle);
                             startActivityForResult(intent, DISPLAYPHOTOCODE);
                         }
@@ -264,6 +270,20 @@ public class PhotoGallery extends AppCompatActivity {
             }
         }
         }
+    @Override
+    protected void onStop(){
+        super.onStop();
+
+        try{
+            FileOutputStream fos= new FileOutputStream("./com/example/savingstate/save.JSON");
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+            oos.writeObject(alblist);
+            oos.close();
+            fos.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
 
 
 }

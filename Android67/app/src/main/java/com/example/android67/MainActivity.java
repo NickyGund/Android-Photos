@@ -1,6 +1,7 @@
 package com.example.android67;
 
 import androidx.appcompat.app.AppCompatActivity;
+//import com.example.savingstate.AndroidSaveState;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +13,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -41,7 +47,7 @@ class Album implements Serializable {
     }
 
 }
-class Photo implements Serializable{
+class Photo implements Serializable {
     String path;
     ArrayList<String> location_tags;
     ArrayList<String> person_tags;
@@ -66,8 +72,10 @@ class Photo implements Serializable{
         this.location_tags = location_tags;
     }
 }
+
 public class MainActivity extends AppCompatActivity {
 
+    //private AndroidSaveState saveState;
     private ListView albumlistview;
    // private String[] albumnames;
     private Button addAlbum, searchPhotos, renameAlbum;
@@ -78,6 +86,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+       /* try
+        {
+            FileInputStream fis = new FileInputStream("com/example/savingstate/save.JSON");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            if(ois !=null) {
+                alblist = (ArrayList<Album>) ois.readObject();
+            }
+            else{
+                alblist = new ArrayList<>();
+            }
+            ois.close();
+            fis.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+            return;
+        }catch(ClassNotFoundException c){
+            System.out.println("Class not found");
+            c.printStackTrace();
+            return;
+        }*/
         alblist = new ArrayList<>();
         //albumnames = getResources().getStringArray(R.array.album_array);
         albumlistview = findViewById(R.id.albumList);
@@ -124,7 +153,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    /*private void loadAlblist(){
+        if(saveState.getAlblist()!=null){
+            alblist=(ArrayList<Album>) saveState.getAlblist();
+        }
+        else{
+            alblist = new ArrayList<>();
+        }
+    }*/
+   /* private void setUpListener(){
 
+    }*/
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current album list state
+        savedInstanceState.putSerializable("alblist", alblist);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
     private void showGallery(int pos) {
         int requestcode = 3;
         Bundle bundle = new Bundle();
@@ -132,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("debugtag", "name is " + alb.getName());
         bundle.putInt("index", pos);
         bundle.putSerializable("album", alb);
-        bundle.putSerializable("alblist", alblist);
+        bundle.putSerializable("alblist_from_main", alblist);
+        Log.d("debugtag",alblist.toString());
         Intent intent = new Intent(this, PhotoGallery.class);
         intent.putExtras(bundle);
         startActivityForResult(intent, requestcode);
@@ -210,5 +258,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    protected void onStop(){
+        super.onStop();
 
+        try{
+            FileOutputStream fos= new FileOutputStream("./com/example/savingstate/save.JSON");
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+            oos.writeObject(alblist);
+            oos.close();
+            fos.close();
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+    }
 }
