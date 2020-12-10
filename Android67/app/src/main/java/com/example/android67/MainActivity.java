@@ -195,21 +195,18 @@ public class MainActivity extends AppCompatActivity {
         }
         if(requestCode == 3){
             if(resultCode == RESULT_OK){
-                Album albupdate = (Album) data.getSerializableExtra("album");
-                //alblist = (ArrayList<Album>) data.getSerializableExtra("alblist");
-                Log.d("debugtag", "back button check");
-                for (Album alb : alblist){
+                Bundle bundle = data.getExtras();
+                ArrayList<Album> updatelist = (ArrayList<Album>) bundle.getSerializable("alblist");
+                adapter = null;
+                alblist.clear();
+                for(Album alb : updatelist){
                     Log.d("debugtag", alb.getName());
-                    if (albupdate.getName().equals(alb.getName())){
-                        int albindex = alblist.indexOf(alb);
-                        alblist.set(albindex, albupdate);
-                        adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
-                        adapter.notifyDataSetChanged();
-                        albumlistview.setAdapter(adapter);
-                        break;
-                    }
-
+                    alblist.add(alb);
                 }
+                adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
+                adapter.notifyDataSetChanged();
+                albumlistview.setAdapter(adapter);
+
             }
         }
     }

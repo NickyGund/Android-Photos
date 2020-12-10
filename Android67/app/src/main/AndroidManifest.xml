@@ -14,7 +14,10 @@
         <activity
             android:name=".MovePhoto"
             android:label="@string/title_activity_move_photo"
-            android:theme="@style/Theme.Android67.NoActionBar"></activity>
+            android:theme="@style/Theme.Android67.NoActionBar">
+            <meta-data android:name="android.support.PARTENT_ACTIVITY"
+                       android:value="com.example.androig67.PhotoGallery" />
+        </activity>
         <activity
             android:name=".SearchResult"
             android:label="@string/title_activity_search_result"

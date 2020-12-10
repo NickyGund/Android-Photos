@@ -113,6 +113,7 @@ public class PhotoGallery extends AppCompatActivity {
                             Log.d("debugtag", "this happens2");
                             bundle.putString("photopath",selected_img_path);
                             bundle.putSerializable("album", album_from_main);
+                            bundle.putSerializable("alblist", alblist);
                             intent.putExtras(bundle);
                             Log.d("debugtag", "this happens3");
                             startActivityForResult(intent, MOVECODE);
@@ -148,8 +149,17 @@ public class PhotoGallery extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra("album", album_from_main);
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(PhotoGallery.this, MainActivity.class);
+                int i=0;
+                for(Album alb : alblist){
+                    if(alb.getName().equals(album_from_main.getName())){
+                        alblist.set(i, album_from_main);
+                    }
+                    i++;
+                }
+                bundle.putSerializable("alblist", alblist);
+                intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -188,6 +198,9 @@ public class PhotoGallery extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+
+        }
         if(requestCode == PHOTOPICKCODE && data != null){
             boolean dupe = false;
             String uri = data.getData().toString();
@@ -235,6 +248,20 @@ public class PhotoGallery extends AppCompatActivity {
             this.album_from_main = albumfromdisplay;
             linearLayout.removeAllViewsInLayout();
             updateScreen(albumfromdisplay.getPhotolist());
+        }
+        else if(requestCode == MOVECODE && resultCode == RESULT_OK){
+            Bundle bundle_from_move = data.getExtras();
+            Album album_from_main = (Album) bundle_from_move.get("album");
+            this.album_from_main = album_from_main;
+            ArrayList<Album> alblist = (ArrayList<Album>) bundle_from_move.get("alblist");
+            this.alblist = alblist;
+            if(album_from_main.getPhotolist().isEmpty()){
+                linearLayout.removeAllViewsInLayout();
+            }
+            else{
+                linearLayout.removeAllViewsInLayout();
+                updateScreen(album_from_main.getPhotolist());
+            }
         }
         }
 
