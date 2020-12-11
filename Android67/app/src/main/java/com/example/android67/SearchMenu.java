@@ -67,6 +67,7 @@ public class SearchMenu extends AppCompatActivity {
                                         continue;
                                     } else {
                                         personfound = false;
+                                        break;
                                     }
                                 }
                                 if (personfound) {
@@ -83,6 +84,7 @@ public class SearchMenu extends AppCompatActivity {
                                             continue;
                                         } else {
                                             locationfound = false;
+                                            break;
                                         }
                                     }
                                     if (locationfound) {
@@ -125,6 +127,7 @@ public class SearchMenu extends AppCompatActivity {
                                    }
                                    else{
                                        tagfound = false;
+                                       break;
                                        //tagnotfound
                                    }
                                }
@@ -138,6 +141,7 @@ public class SearchMenu extends AppCompatActivity {
                                            }
                                            else{
                                                location = false;
+                                               break;
                                            }
                                        }
                                        if(location == true){
