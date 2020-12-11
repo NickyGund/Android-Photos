@@ -93,20 +93,19 @@ public class MainActivity extends AppCompatActivity {
         {
             FileInputStream fis = getApplicationContext().openFileInput("save.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            if(ois !=null) {
-                alblist = (ArrayList<Album>) ois.readObject();
-            }
-            else{
+            alblist = (ArrayList<Album>) ois.readObject();
+
+            if(alblist==null){
                 alblist = new ArrayList<>();
             }
             ois.close();
             fis.close();
         }catch(IOException ioe){
-            ioe.printStackTrace();
+           ioe.printStackTrace();
             return;
         }catch(ClassNotFoundException c){
-            System.out.println("Class not found");
-            c.printStackTrace();
+           System.out.println("Class not found");
+           c.printStackTrace();
             return;
         }
         //alblist = new ArrayList<>();
