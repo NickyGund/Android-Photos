@@ -30,8 +30,10 @@ public class DisplayPhoto extends AppCompatActivity {
     private ImageButton backarrow, forwardarrow;
     private ArrayList<String> loctags, persontags;
     private ArrayList<Photo> alb;
+    private ArrayList<Album> alblist;
     private int pos_in_alb;
     private int albsize;
+    //private int pos_in_alblist;
     private static int TAGMENUCODE = 1;
     private Album albumfromgallery;
 
@@ -57,6 +59,7 @@ public class DisplayPhoto extends AppCompatActivity {
         String photopath = bundle_from_gallery.getString("photopath");
         albumfromgallery = (Album) bundle_from_gallery.getSerializable("album");
         alb = albumfromgallery.getPhotolist();
+        alblist = (ArrayList<Album>) bundle_from_gallery.getSerializable("alblist");
         albsize = alb.size();
         updateDisplay(photopath, albumfromgallery);
 
@@ -104,6 +107,9 @@ public class DisplayPhoto extends AppCompatActivity {
                 Log.d("debugtag", photo.getPath());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("photofromdisplay", photo);
+                bundle.putInt("pos_in_alb",pos_in_alb);
+                bundle.putSerializable("album",alb);
+                bundle.putSerializable("alblist",alblist);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, TAGMENUCODE);
             }

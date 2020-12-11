@@ -21,12 +21,14 @@ import java.util.ArrayList;
 
 public class TagMenu extends AppCompatActivity {
 
-   private Button add, delete;
-   private TextView tagtextview;
-   private EditText personinput, locinput;
-   private ArrayList<String> persontags,locationtags;
-
-
+    private Button add, delete;
+    private TextView tagtextview;
+    private EditText personinput, locinput;
+    private ArrayList<String> persontags,locationtags;
+    private Photo photo_from_display;
+    private Album album;
+    private ArrayList<Album> alblist;
+    private int pos_in_alb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +45,12 @@ public class TagMenu extends AppCompatActivity {
         locinput = findViewById(R.id.locationtagEditText);
 
         Bundle bundle_from_display = getIntent().getExtras();
-        Photo photo_from_display = (Photo) bundle_from_display.getSerializable("photofromdisplay");
+        photo_from_display = (Photo) bundle_from_display.getSerializable("photofromdisplay");
         persontags = photo_from_display.getPersonTags();
         locationtags = photo_from_display.getLocationTags();
+        //pos_in_alb = bundle_from_display.getInt("pos_in_alb");
+        //album = (Album)bundle_from_display.getSerializable("album");
+        //alblist = (ArrayList<Album>)bundle_from_display.getSerializable("alblist");
         updateTextBox();
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -145,8 +150,17 @@ public class TagMenu extends AppCompatActivity {
                     loctagstring += loctag + ", ";
                 }
                 tagtextview.setText(loctagstring + '\n' + persontagstring);
-
-            }
+                /*photo_from_display.location_tags=locationtags;
+                photo_from_display.person_tags=persontags;
+                album.photolist.set(pos_in_alb,photo_from_display);
+                int i=0;
+                for(Album alb:alblist){
+                    if(alb.getName().equals(album.getName())){
+                        alblist.set(i,album);
+                    }
+                    i++;
+                }*/
+        }
 
     }
 }
