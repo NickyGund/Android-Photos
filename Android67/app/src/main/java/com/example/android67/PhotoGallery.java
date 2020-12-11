@@ -1,31 +1,25 @@
 package com.example.android67;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -275,7 +269,8 @@ public class PhotoGallery extends AppCompatActivity {
         super.onStop();
 
         try{
-            FileOutputStream fos= new FileOutputStream("./com/example/savingstate/save.JSON");
+            String fileName = "save.txt";
+            FileOutputStream fos= getApplicationContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             oos.writeObject(alblist);
             oos.close();

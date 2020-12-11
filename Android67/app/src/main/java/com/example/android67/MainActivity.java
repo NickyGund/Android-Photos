@@ -3,8 +3,8 @@ package com.example.android67;
 import androidx.appcompat.app.AppCompatActivity;
 //import com.example.savingstate.AndroidSaveState;
 
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,9 +16,11 @@ import android.widget.Toast;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 class Album implements Serializable {
@@ -87,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /* try
+       try
         {
-            FileInputStream fis = new FileInputStream("com/example/savingstate/save.JSON");
+            FileInputStream fis = getApplicationContext().openFileInput("save.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             if(ois !=null) {
                 alblist = (ArrayList<Album>) ois.readObject();
@@ -106,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Class not found");
             c.printStackTrace();
             return;
-        }*/
-        alblist = new ArrayList<>();
+        }
+        //alblist = new ArrayList<>();
         //albumnames = getResources().getStringArray(R.array.album_array);
         albumlistview = findViewById(R.id.albumList);
         adapter = new ArrayAdapter<Album>(this, R.layout.album, alblist);
@@ -263,7 +265,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
 
         try{
-            FileOutputStream fos= new FileOutputStream("./com/example/savingstate/save.JSON");
+            String fileName = "save.txt";
+            FileOutputStream fos= getApplicationContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             oos.writeObject(alblist);
             oos.close();
